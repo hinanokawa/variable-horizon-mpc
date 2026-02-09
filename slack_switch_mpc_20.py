@@ -43,13 +43,17 @@ u_min, u_max = 0.0, 1.2
 # ★② 外乱（複数回）
 # ==============================
 def disturbance(t):
+    w = 0.01 * np.sin(0.1 * t)  # 常にごく小さい揺らぎ
+
     if 20 <= t <= 25:
-        return -1.0
-    if 40 <= t <= 45:
-        return -0.8
-    if 70 <= t <= 80:
-        return -1.2
-    return 0.0
+        w += -1.0 + 0.05 * np.sin(0.5 * t)
+    elif 40 <= t <= 45:
+        w += -0.8 + 0.05 * np.sin(0.5 * t)
+    elif 70 <= t <= 80:
+        w += -1.2 + 0.05 * np.sin(0.5 * t)
+
+    return w
+
 
 # ==============================
 # 平滑化モデル
@@ -229,6 +233,3 @@ axs[4].grid(True)
 
 plt.tight_layout()
 plt.show()
-
-
-
